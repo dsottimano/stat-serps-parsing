@@ -30,11 +30,15 @@ fileArr.forEach(x => {
 
     for (var i = 0; i < nodes.length; i++) {
 
-        var review = '',
+        var fullReview = '',
             title = '',
             link = '',
             hasReview = false,
-            rootDomain = ''
+            rootDomain = '',
+            reviewCount,
+            reviewScore,
+            cleansedReview
+
 
         var element = nodes[i];
         var linkNodes = select(".//x:h3[@class='r']//x:a", element)
@@ -49,8 +53,15 @@ fileArr.forEach(x => {
         var reviews = select(".//x:div[@class='slp f']", element)
 
         for (var r = 0; r < reviews.length; r++) {
-            hasReview = true
-            review = reviews[r].textContent;
+
+            if (reviews[r].textContent.match(/rating/gi)) {
+                hasReview = true
+                fullReview = reviews[r].textContent
+                cleansedReview = fullReview.replace("Rating: ","").replace("reviews","").split("-")
+                reviewScore = fullReview[0].trim()
+                reviewCount = fullReview[1].trim()
+            }
+
 
         }
 
@@ -62,7 +73,9 @@ fileArr.forEach(x => {
             title: title,
             link: link,
             rootDomain: rootDomain,
-            review: review,
+            fullReview: fullReview,
+            reviewCount : reviewCount,
+            reviewScore : reviewScore,
             hasReview: hasReview,
         }
 
