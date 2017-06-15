@@ -58,8 +58,8 @@ fileArr.forEach(x => {
                 hasReview = true
                 fullReview = reviews[r].textContent
                 cleansedReview = fullReview.replace("Rating: ","").replace("reviews","").split("-")
-                reviewScore = fullReview[0].trim()
-                reviewCount = fullReview[1].trim()
+                reviewScore = cleansedReview[0].trim()
+                reviewCount = cleansedReview[1].trim()
             }
 
 
